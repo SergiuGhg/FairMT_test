@@ -225,7 +225,12 @@ if not os.path.exists(save_path):
 
 #save file name
 if clean_thoughts:
-    save_name = f'{save_path}/{dataset.split("/")[-1].replace(".json","")}_{model_name.split("/")[-1]}_{prompt.split("/")[-1].replace(".txt","")}.json'
+    parts = dataset.split("/")
+    category = parts[-3]          
+    type2 = parts[-2]     
+    demo = parts[-1].replace(".json", "") 
+    
+    save_name = f"{save_path}/{category}_{type2}_{demo}_{model_name.split('/')[-1]}.json"
 else:
     save_name = f'{save_path}/{dataset.split("/")[-1].replace(".json","")}_{model_name.split("/")[-1]}_{prompt.split("/")[-1].replace(".txt","")}_w_thoughts.json'
 
