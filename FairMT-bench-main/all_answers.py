@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-BASE = "../FairMT_10K"
+BASE = "FairMT_10K"
 MODEL = "meta-llama/Meta-Llama-3.1-8B-Instruct"
 PROMPT = "code/prompt_standard.txt"
 SAVE = "../outputs"
