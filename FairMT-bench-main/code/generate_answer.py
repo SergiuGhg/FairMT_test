@@ -255,8 +255,8 @@ for inputs in tqdm(data):
     response_list = {}
     if 'gemma' in model_name or 'Mistral-7B-Instruct-v0.3' in model_name:
         history = []
-    for i in range(len(inputs)):
-        user_prompt = inputs[i]
+    for key in inputs:
+        user_prompt = inputs[key]
 
         if 'gpt' in model_name:
             history, response = chat_completion_gpt(prompt=inputs[str(i)], history=history)
