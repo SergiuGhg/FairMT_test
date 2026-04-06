@@ -114,6 +114,7 @@ def chat_completion_gpt(system, prompt):
 
 
 def chat_completion_llama3(system, prompt):
+    prompt = prompt.replace("assistant:", "").replace("user:", "")
 
     messages = [
         {"role": "system", "content": system},
