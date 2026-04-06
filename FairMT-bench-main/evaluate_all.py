@@ -14,7 +14,7 @@ for root, dirs, files in os.walk(BASE):
             print(f"\n=== Running on {dataset_path} ===\n")
 
             cmd = [
-                "python", "evaluation_coreference.py",
+                "python", "code/evaluation_coreference.py",
                 "--model", MODEL,
                 "--prompt", PROMPT,
                 "--dataset", dataset_path,
