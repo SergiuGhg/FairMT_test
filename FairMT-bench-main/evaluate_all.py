@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-BASE = "../../outputs"
+BASE = "../outputs"
 MODEL = "meta-llama/Meta-Llama-Guard-3-8B"
 PROMPT = "code/prompt_standard.txt"
 SAVE = "../evals"
