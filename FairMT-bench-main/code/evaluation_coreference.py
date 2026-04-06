@@ -77,7 +77,15 @@ else:
     if load_in_8bit:
         print("\n\n***loading model in 8 bits***\n\n")
         
-    model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto", load_in_8bit=load_in_8bit)
+    from transformers import BitsAndBytesConfig
+
+    bnb_config = BitsAndBytesConfig(load_in_8bit=True)
+    
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        device_map="auto",
+        quantization_config=bnb_config
+    )
 
 
 ##define chat completion function for GPT##
