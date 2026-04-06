@@ -121,11 +121,11 @@ def chat_completion_llama3(system, prompt):
         {"role": "user", "content": prompt},
     ]
 
-    prompt = tokenizer.apply_chat_template(
+    """prompt = tokenizer.apply_chat_template(
             messages, 
             tokenize=False, 
             add_generation_prompt=True
-    )
+    )"""
 
     terminators = [
         pipeline.tokenizer.eos_token_id,
