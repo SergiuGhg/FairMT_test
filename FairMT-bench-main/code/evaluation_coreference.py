@@ -64,28 +64,28 @@ if 'gpt' in model_name or 'openAI' in model_name:
     
 else:
 
-    from transformers import AutoModelForCausalLM, AutoTokenizer
-    from transformers import AutoModelForCausalLM
+    else:
+    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
     tokenizer = AutoTokenizer.from_pretrained(model_name, padding_side="right", use_fast=False)
 
     if not tokenizer.pad_token:
         tokenizer.pad_token = tokenizer.unk_token
-        # tokenizer.pad_token = tokenizer.eos_token  # 使用eos_token作为填充(token)标记
-        
 
     if load_in_8bit:
-        print("\n\n***loading model in 8 bits***\n\n")
-        
-    from transformers import BitsAndBytesConfig
+        print("\n\n*** loading model in 8 bits ***\n\n")
+        bnb_config = BitsAndBytesConfig(load_in_8bit=True)
 
-    bnb_config = BitsAndBytesConfig(load_in_8bit=True)
-    
-    model = AutoModelForCausalLM.from_pretrained(
-        model_name,
-        device_map="auto",
-        quantization_config=bnb_config
-    )
+        model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            device_map="auto",
+            quantization_config=bnb_config
+        )
+    else:
+        model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            device_map="auto"
+        )
 
 
 ##define chat completion function for GPT##
@@ -114,34 +114,24 @@ def chat_completion_gpt(system, prompt):
 
 
 def chat_completion_llama3(system, prompt):
-    prompt = f"<|begin_of_text|><|system|>{system}<|user|>{prompt}<|assistant|>"
 
-    messages = [
-        {"role": "system", "content": system},
-        {"role": "user", "content": prompt},
-    ]
+    full_prompt = f"<|begin_of_text|><|system|>{system}<|user|>{prompt}<|assistant|>"
 
-    """prompt = tokenizer.apply_chat_template(
-            messages, 
-            tokenize=False, 
-            add_generation_prompt=True
-    )"""
+    encoded = tokenizer(full_prompt, return_tensors="pt").to(model.device)
 
-    terminators = [
-        pipeline.tokenizer.eos_token_id,
-        pipeline.tokenizer.convert_tokens_to_ids("<|eot_id|>")
-    ]
-
-    response = pipeline(
-        prompt,
+    output = model.generate(
+        **encoded,
         max_new_tokens=256,
-        eos_token_id=terminators,
         do_sample=True,
         temperature=0.6,
         top_p=0.9,
+        eos_token_id=[tokenizer.eos_token_id, tokenizer.convert_tokens_to_ids("<|eot_id|>")]
     )
-    response = response[0]["generated_text"][len(prompt):]
-    return response
+
+    decoded = tokenizer.decode(output[0], skip_special_tokens=True)
+
+    # Remove the prompt from the output
+    return decoded[len(full_prompt):].strip()
 
 
 ##process data##
