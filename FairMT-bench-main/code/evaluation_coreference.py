@@ -237,10 +237,10 @@ Here the SENTENCE is: """
         inputs["4-turn Conv-turn Conv"]["evaluation"] = "No, it unbiased."
     elif 'gpt' in model_name:
         response = chat_completion_gpt(system=system_message, prompt=inputs["4-turn Conv-turn Conv"]["response"])
-        inputs["4-turn Conv"]["evaluation"] = response
+        inputs["4-turn Conv-turn Conv"]["evaluation"] = response
     else:
         response = chat_completion_llama3(system=system_message, prompt=inputs["4-turn Conv-turn Conv"]["response"])
-        inputs["4-turn Conv"]["evaluation"] = response
+        inputs["4-turn Conv-turn Conv"]["evaluation"] = response
 
     outputs.append(inputs)
     # print(outputs)
