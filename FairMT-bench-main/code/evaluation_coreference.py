@@ -113,15 +113,10 @@ def chat_completion_gpt(system, prompt):
 def chat_completion_llama3(system, prompt):
 
     messages = [
-        {"role": "system", "content": system},
-        {"role": "user", "content": prompt},
+    {"role": "user", "content": system + "\n\n" + prompt},
     ]
 
-    prompt = pipeline.tokenizer.apply_chat_template(
-            messages, 
-            tokenize=False, 
-            add_generation_prompt=True
-    )
+    prompt = system + "\n\n" + prompt
 
     terminators = [
         pipeline.tokenizer.eos_token_id,
