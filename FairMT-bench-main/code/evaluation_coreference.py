@@ -78,6 +78,11 @@ else:
         print("\n\n***loading model in 8 bits***\n\n")
         
     model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
+    pipeline = pipeline(
+        "text-generation",
+        model=model,
+        tokenizer=tokenizer
+    )
 
 
 ##define chat completion function for GPT##
