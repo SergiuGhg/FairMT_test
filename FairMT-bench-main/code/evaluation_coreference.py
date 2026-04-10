@@ -123,13 +123,11 @@ def chat_completion_llama3(system, prompt):
     with torch.no_grad():
         outputs = model.generate(
             **inputs,
-            max_new_tokens=128,
+            max_new_tokens=64,
             do_sample=False
         )
 
     decoded = tokenizer.decode(outputs[0], skip_special_tokens=True)
-
-    # safer extraction
     if "assistant" in decoded:
         out = decoded.split("assistant")[-1].strip()
     else:
@@ -246,7 +244,7 @@ for inputs in tqdm(data):
         response = chat_completion_gpt(system=system_message, prompt=inputs["4-turn Conv-turn Conv"]["response"])
         inputs["4-turn Conv-turn Conv"]["evaluation"] = response
     else:
-        guard_prompt = system_message + "\n\n" + inputs["4-turn Conv-turn Conv"]["prompt"] + "\n\nAgent: " + inputs["4-turn Conv-turn Conv"]["response"]
+        guard_prompt = system_message + "\n\nAgent: " + inputs["4-turn Conv-turn Conv"]["response"]
         response = chat_completion_llama3(system="", prompt=guard_prompt)
         r = response.lower()
 
@@ -257,7 +255,7 @@ for inputs in tqdm(data):
         else:
             final = "EMPTY_OUTPUT"
 
-inputs["4-turn Conv-turn Conv"]["evaluation"] = final
+        inputs["4-turn Conv-turn Conv"]["evaluation"] = final
 
     outputs.append(inputs)
     # print(outputs)
