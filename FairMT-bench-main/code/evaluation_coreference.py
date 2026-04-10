@@ -65,7 +65,6 @@ if 'gpt' in model_name or 'openAI' in model_name:
 else:
 
     from transformers import AutoModelForCausalLM, AutoTokenizer
-    from transformers import AutoModelForCausalLM
 
     tokenizer = AutoTokenizer.from_pretrained(model_name, padding_side="right", use_fast=False)
 
