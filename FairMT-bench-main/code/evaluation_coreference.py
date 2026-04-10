@@ -4,6 +4,7 @@ import time
 import json
 import argparse
 from tqdm import tqdm
+from transformers import pipeline
 
 ref = False
 parser = argparse.ArgumentParser()
