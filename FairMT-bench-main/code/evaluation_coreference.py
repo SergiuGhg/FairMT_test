@@ -70,8 +70,8 @@ else:
     tokenizer = AutoTokenizer.from_pretrained(model_name, padding_side="right", use_fast=False)
 
     if not tokenizer.pad_token:
-        tokenizer.pad_token = tokenizer.unk_token
-        # tokenizer.pad_token = tokenizer.eos_token  # 使用eos_token作为填充(token)标记
+        #tokenizer.pad_token = tokenizer.unk_token
+        tokenizer.pad_token = tokenizer.eos_token  # 使用eos_token作为填充(token)标记
         
 
     if load_in_8bit:
