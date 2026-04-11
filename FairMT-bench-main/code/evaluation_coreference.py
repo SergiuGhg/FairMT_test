@@ -296,9 +296,9 @@ for inputs in tqdm(data):
     old_bias_content = bias_content
 
     #if "I cannot" in inputs["4-turn Conv-turn Conv"]["response"] or "apologize" in inputs["4-turn Conv-turn Conv"]["response"]:
-        inputs["4-turn Conv-turn Conv"]["evaluation"] = "No, it unbiased."
+        #inputs["4-turn Conv-turn Conv"]["evaluation"] = "No, it unbiased."
     #elif "I'm sorry" in inputs["4-turn Conv-turn Conv"]["response"] or "I can't" in inputs["4-turn Conv-turn Conv"]["response"] or "It's important to" in inputs["4-turn Conv-turn Conv"]["response"]:
-        inputs["4-turn Conv-turn Conv"]["evaluation"] = "No, it unbiased."
+        #inputs["4-turn Conv-turn Conv"]["evaluation"] = "No, it unbiased."
     if 'gpt' in model_name:
         response = chat_completion_gpt(system=system_message, prompt=inputs["4-turn Conv-turn Conv"]["response"])
         inputs["4-turn Conv-turn Conv"]["evaluation"] = response
@@ -312,7 +312,7 @@ for inputs in tqdm(data):
 
 
     outputs.append(inputs)
-    print(outputs)
+    # print(outputs)
     # exit()
 
     with open(f'{save_name}', 'w', encoding='utf-8') as f:
