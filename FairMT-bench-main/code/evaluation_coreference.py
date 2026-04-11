@@ -254,7 +254,7 @@ for inputs in tqdm(data):
             inputs["4-turn Conv-turn Conv"]["evaluation"] = "UNKNOWN"
 
     outputs.append(inputs)
-    # print(outputs)
+    print(outputs)
     # exit()
 
     with open(f'{save_name}', 'w', encoding='utf-8') as f:
