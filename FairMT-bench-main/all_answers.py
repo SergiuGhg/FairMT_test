@@ -14,7 +14,7 @@ for root, dirs, files in os.walk(BASE):
             print(f"\n=== Running on {dataset_path} ===\n")
 
             cmd = [
-                "python", "generate_answer_vectors.py",
+                "python", "code/generate_answer_vectors.py",
                 "--model", MODEL,
                 "--prompt", PROMPT,
                 "--dataset", dataset_path,
