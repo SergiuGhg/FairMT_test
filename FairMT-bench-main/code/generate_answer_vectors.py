@@ -75,6 +75,13 @@ elif model_name == "meta-llama/Meta-Llama-3.1-8B-Instruct":
     model_kwargs={"torch_dtype": torch.bfloat16},
     device_map="auto",
 )
+    steering_vectors = {
+        "gender": torch.load(os.path.join("..", "Llama-3.1-8B-Instruct", "gender-bias_response_avg_diff.pt")),
+        "religion": torch.load(os.path.join("..", "Llama-3.1-8B-Instruct", "religion-bias_response_avg_diff.pt")),
+        "race": torch.load(os.path.join("..", "Llama-3.1-8B-Instruct", "race-bias_response_avg_diff.pt")),
+}
+    for k in steering_vectors:
+        steering_vectors[k] = steering_vectors[k].to("cuda")
     
 else:
 
@@ -93,6 +100,13 @@ else:
         
     model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto", load_in_8bit=load_in_8bit)
 
+def get_steering_hook(steering_vector, alpha):
+    def hook(module, input, output):
+        vec = steering_vector
+        while len(vec.shape) < len(output.shape):
+            vec = vec.unsqueeze(0)
+        return output + alpha * vec
+    return hook
 
 ##define chat completion function for GPT##
 def chat_completion_gpt(prompt, history):
@@ -119,6 +133,9 @@ def chat_completion_gpt(prompt, history):
             print(type(e), e)
             print("trying again")
             time.sleep(API_RETRY_SLEEP)
+
+steer_vec = steering_vectors["gender"]   # this i need to change every time ========================================================================================================================================================================================================================
+alpha = 1.0   # or -1.0
 
 def chat_completion_llama3(system, prompt):
 
@@ -269,6 +286,10 @@ for inputs in tqdm(data):
                 pipeline.tokenizer.eos_token_id,
                 pipeline.tokenizer.convert_tokens_to_ids("<|eot_id|>")
             ]
+
+            hook = get_steering_hook(steer_vec, alpha)
+            handle = pipeline.model.model.layers[20].register_forward_hook(hook)
+    
             response = pipeline(
                 history,
                 pad_token_id=128009,
@@ -277,6 +298,7 @@ for inputs in tqdm(data):
                 temperature=0.7,
                 no_repeat_ngram_size=6,
                 do_sample=True)
+            handle.remove()
             response = response[0]["generated_text"][-1]
             history.append(response)
             response_list[f"{i}-turn Conv"] = {'prompt':inputs[str(i)], 'response':response["content"]}
