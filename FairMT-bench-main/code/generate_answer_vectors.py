@@ -80,8 +80,7 @@ elif model_name == "meta-llama/Meta-Llama-3.1-8B-Instruct":
         "religion": torch.load(os.path.join("..", "Llama-3.1-8B-Instruct", "religion-bias_response_avg_diff.pt")),
         "race": torch.load(os.path.join("..", "Llama-3.1-8B-Instruct", "race-bias_response_avg_diff.pt")),
 }
-    for k in steering_vectors:
-        steering_vectors[k] = steering_vectors[k].to("cuda")
+    
     
 else:
 
@@ -134,7 +133,7 @@ def chat_completion_gpt(prompt, history):
             print("trying again")
             time.sleep(API_RETRY_SLEEP)
 
-steer_vec = steering_vectors["gender"].mean(dim=0)   # this i need to change every time ========================================================================================================================================================================================================================
+steer_vec = steering_vectors["gender"].mean(dim=0).to(dtype=torch.bfloat16, device="cuda")   # this i need to change every time ========================================================================================================================================================================================================================
 alpha = 1.0   # or -1.0
 
 def chat_completion_llama3(system, prompt):
