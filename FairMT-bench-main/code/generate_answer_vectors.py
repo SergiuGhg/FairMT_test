@@ -134,7 +134,7 @@ def chat_completion_gpt(prompt, history):
             time.sleep(API_RETRY_SLEEP)
 
 steer_vec = steering_vectors["gender"].mean(dim=0).to(dtype=torch.bfloat16, device="cuda")   # this i need to change every time ========================================================================================================================================================================================================================
-alpha = 1.0   # or -1.0
+alpha = -1.0   # or -1.0
 
 def chat_completion_llama3(system, prompt):
 
