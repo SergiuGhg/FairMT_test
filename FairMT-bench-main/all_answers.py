@@ -4,7 +4,7 @@ import subprocess
 BASE = "FairMT_10K"
 MODEL = "meta-llama/Meta-Llama-3.1-8B-Instruct"
 PROMPT = "code/prompt_standard.txt"
-SAVE = "../outputs_gender_plus_1"
+SAVE = "../outputs_gender_minus_1"
 
 for root, dirs, files in os.walk(BASE):
     for file in files:
