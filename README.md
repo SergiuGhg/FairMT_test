@@ -1,23 +1,40 @@
-# FairMT Reproduction and Modifications
+# FAIRMT Reproduction with Steering Vectors
 
-The files contained here are based on the original FairMT files, however they are modfied for use of different models and steering vectors experiments.
+This repository is based on the FAIRMT benchmark for multi-turn fairness evaluation in LLMs.
 
-Changes have been made to:
- - add steering vectors to the answer generation code
- - evaluate the answers using Llama Guard 3
+It reproduces parts of the original pipeline and extends it with activation steering vector experiments using Llama-based models.
 
-## Running the evaluation
+## Modifications
 
-The all_answers.py file can be used to obtain the conversation answers using Llama-3.1-8B-Instruct.
-The file generate_answers_vectors.py can be modified to use different steering vectors depending on test case.
-The evaluate_all.py file will evaluate all answers using the Llama Guard 3 model.
+- Added activation steering vectors to the generation pipeline
+- Replaced original model with Llama-3.1-8B-Instruct
+- Used Llama Guard 3 for evaluation
+- Added scripts for running multiple steering-vector experiments
 
-## File description
+## Running the Code
 
-Along the original files from the FairMT experiment repository one can find the outputs_ files and the evals_ files.
-The outputs_ files are the respective outputs for each of the 6 experiments that were run.
-The evals_ files are their respective evaluations.
+Generate responses:
+```bash
+python all_answers.py
+```
+
+Set steering vectors in:
+```bash
+generate_answers_vectors.py
+```
+
+Evaluate results:
+```bash
+python evaluate_all.py
+```
+
+## Files
+
+- `outputs_*` → generated model outputs
+- `evals_*` → evaluation results
+- `race_bias_*.pt` → steering vectors
 
 ## Findings
 
-The results of the experiment can be found in the PR_findings.pdf file
+Results are stored in:
+- `PR_findings.pdf`
