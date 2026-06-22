@@ -10,7 +10,7 @@ Changes have been made to:
 
 The all_answers.py file can be used to obtain the conversation answers using Llama-3.1-8B-Instruct.
 The file generate_answers_vectors.py can be modified to use different steering vectors depending on test case.
-The evaluate_all.oy file will evaluate all answers using the Llama Guard 3 model.
+The evaluate_all.py file will evaluate all answers using the Llama Guard 3 model.
 
 ## File description
 
