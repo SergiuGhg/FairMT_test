@@ -1,4 +1,4 @@
-# FAIRMT Reproduction and Modifications
+# FairMT Reproduction and Modifications
 
 The files contained here are based on the original FairMT files, however they are modfied for use of different models and steering vectors experiments.
 
