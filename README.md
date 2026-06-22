@@ -36,7 +36,7 @@ python evaluate_all.py
 
 ## Findings
 
-Results are stored in:
+Results are detailed in:
 - `PR_findings.pdf`
 
 ## Reference
