@@ -32,7 +32,7 @@ python evaluate_all.py
 
 - `outputs_*` → generated model outputs
 - `evals_*` → evaluation results
-- `race_bias_*.pt` → steering vectors
+- `Llama-3.1-8B-instruct` → steering vectors folder
 
 ## Findings
 
