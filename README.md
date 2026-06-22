@@ -38,3 +38,8 @@ python evaluate_all.py
 
 Results are stored in:
 - `PR_findings.pdf`
+
+## Reference
+
+Original FAIRMT benchmark:
+https://arxiv.org/abs/2410.19317
